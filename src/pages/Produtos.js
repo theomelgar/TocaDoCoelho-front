@@ -6,13 +6,13 @@ export default function Produtos() {
     return (
         <StyleProdutos>
             <Header>
-                b
+                
             </Header>
             <p>
-                a
+                Lista de produtos ...
             </p>
             <Footer>
-                a
+                
             </Footer>
         </StyleProdutos>
     )
