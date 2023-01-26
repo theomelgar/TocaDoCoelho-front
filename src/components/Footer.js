@@ -17,7 +17,8 @@ export default function Footer() {
 }
 
 const StyleFooter = styled.div`
-    position: absolute;
+    position: fixed;
+    z-index: 1;
     width: 100vw;
     height: 88px;
     left: 0;
