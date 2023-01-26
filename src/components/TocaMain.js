@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { InfoProvider } from "../context/info";
 import Produtos from "../pages/Produtos";
+import Entrar from "../pages/Entrar";
 
 export default function TocaMain() {
 
@@ -12,7 +13,7 @@ export default function TocaMain() {
                     <Route path="/produtos/:id" />
                     <Route path="/carrinho" />
                     <Route path="/finalizar" />
-                    <Route path="/login" />
+                    <Route path="/login" element={<Entrar />}/>
                     <Route path="/cadastro" />
                 </Routes>
             </InfoProvider>
