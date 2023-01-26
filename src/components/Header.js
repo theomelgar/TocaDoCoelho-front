@@ -7,7 +7,7 @@ export default function Header() {
         <StyleHeader>
             <h1>Toca do Coelho</h1>
             <img src={logo} alt={"Logo"} onClick={()=> navigate("/")}/>
-            <Login>
+            <Login onClick={()=> navigate ("/login")}>
                 <div>
                     <p>Login</p>
                     <p>Cadastro</p>

@@ -17,7 +17,7 @@ export default function Sugestao({nome}){
         <Sugestoes>
             <StyleSugestao>
             <span>Veja mais</span>
-                {produto && produto.map((p)=> p.nome!== nome && <Produto p={p}/> )}
+                {produto && produto.map((p)=> p.nome!== nome && <Produto key={p._id} p={p}/> )}
             </StyleSugestao>
         </Sugestoes>
     )

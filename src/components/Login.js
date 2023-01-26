@@ -26,7 +26,7 @@ export default function Logar(){
 
         promise.then( response => {
             setUserData(response.data);
-            navigate("/produtos");
+            navigate("/");
         });
     
         promise.catch(err => {
@@ -63,7 +63,7 @@ export default function Logar(){
                 <FormularioLogin>
                     {formLogin}
                 </FormularioLogin>
-                <StyledLink to="/produtos"><h1>Criar conta</h1></StyledLink>
+                <StyledLink to="/cadastro"><h1>Criar conta</h1></StyledLink>
             </Container>
         </>
     );
