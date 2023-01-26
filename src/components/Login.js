@@ -6,8 +6,8 @@ import { InfoContext } from "../context/info.js";
 
 
 export default function Logar(){
-    const [email, setEmail] = useState();
-    const [senha, setSenha] = useState();
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
     const { setUserData } = useContext(InfoContext);
 
 
@@ -32,6 +32,8 @@ export default function Logar(){
         promise.catch(err => {
             const message = err.response.statusText;
             alert(message);
+            setEmail("");
+            setSenha("");
 
         });
     }
