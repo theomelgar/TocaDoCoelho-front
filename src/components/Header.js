@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/logo.png"
 export default function Header() {
+    const navigate = useNavigate()
     return (
         <StyleHeader>
             <h1>Toca do Coelho</h1>
-            <img src={logo} alt={"Logo"}/>
+            <img src={logo} alt={"Logo"} onClick={()=> navigate("/")}/>
             <Login>
                 <div>
                     <p>Login</p>
@@ -48,6 +50,7 @@ const StyleHeader = styled.div`
     img{
         width: 121px;
         height: 107px;
+        cursor: pointer;
     }
 `
 
@@ -60,6 +63,7 @@ const Login = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     ion-icon{
         font-size: 35px;
     }

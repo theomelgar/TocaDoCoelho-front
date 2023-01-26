@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 export default function Produto({p}){
+    const navigate = useNavigate()
 
     return (
-        <StyleProduto>
+        <StyleProduto onClick={() => navigate(`/produtos/${p._id}`)}>
             <img src={p.foto} alt={"produto"}/>
             <h1>{p.nome}</h1>
             <h2>{p.obs}</h2>
@@ -15,6 +17,7 @@ export default function Produto({p}){
 
 
 const StyleProduto = styled.div`
+    cursor: pointer;
     margin-top: 50px;
     position: relative;
     display: flex;

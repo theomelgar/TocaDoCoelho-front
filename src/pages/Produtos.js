@@ -8,6 +8,7 @@ import Produto from "../components/Produto.js";
 
 export default function Produtos() {
     const [produto, setProduto] = useState([])
+
     useEffect(() => {
         api.get(`/`)
             .then(res => {
@@ -26,8 +27,7 @@ export default function Produtos() {
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Alimentação" &&
-                        <Produto key={p._id} p={p}/>
-                    )
+                        <Produto key={p._id} p={p}/>)
                 }
             </Categoria>
             <Categoria>
@@ -48,7 +48,10 @@ export default function Produtos() {
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Higiene" &&
+                        <>
                         <Produto key={p._id} p={p}/>
+                        <Produto key={p._id} p={p}/>
+                        </>
                     )
                 }
             </Categoria>
@@ -61,14 +64,18 @@ const StyleProdutos = styled.div`
     position: relative;
     width: 100vw;
     height: 100vh;
-    margin: 150px 0;
+    margin: 150px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 `
 const Categoria = styled.div`
     position: relative;
-    display: flex;
+    display: -webkit-box;
+    width: 90%;
     height: 280px;
-    flex-wrap: wrap;
-    margin: 10px 10px;
+    flex-wrap: nowrap;
     gap: 10px;
     overflow: scroll;
     >h1{
