@@ -1,23 +1,28 @@
+import { useContext } from "react"
 import styled from "styled-components"
+import { ItensContext } from "../context/itens"
 export default function Footer() {
+    const {itens,total} = useContext(ItensContext)
+    
     return (
         <StyleFooter>
             <h1>
                 🛒
                 <p>
-                    0
+                    {itens}
                 </p>
             </h1>
 
             <h2>
-                ADICIONE PRODUTOS
+                {total ? "TOTAL:R$"+total : "ADICIONE PRODUTOS"}
             </h2>
         </StyleFooter>
     )
 }
 
 const StyleFooter = styled.div`
-    position: absolute;
+    position: fixed;
+    z-index: 1;
     width: 100vw;
     height: 88px;
     left: 0;
@@ -37,7 +42,7 @@ const StyleFooter = styled.div`
         position: absolute;
         top: 40%;
         right:5%;
-        font-family: 'Raleway';
+        font-family: 'Rubik';
         font-weight: 700;
         font-size: 20px;
         line-height: 23px;
@@ -46,6 +51,8 @@ const StyleFooter = styled.div`
         position: absolute;
         top: 0%;
         right: -50%;
+        font-family: 'Rubik';
+        font-weight: 700;
         font-size: 20px;
     }
 `

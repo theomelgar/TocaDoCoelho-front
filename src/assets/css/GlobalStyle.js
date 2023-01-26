@@ -62,9 +62,11 @@ body{
     background:#90BF60;
 }
 button{
+	border: none;
   cursor: pointer;
   	:hover {
-    	opacity: 0.7;
+    	opacity: 0.8;
+		transform: scale(1.1);
 	}
 }
 .react-confirm-alert-body{

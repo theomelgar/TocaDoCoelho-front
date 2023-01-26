@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/logo.png"
 export default function Header() {
+    const navigate = useNavigate()
     return (
         <StyleHeader>
             <h1>Toca do Coelho</h1>
-            <img src={logo} />
+            <img src={logo} alt={"Logo"} onClick={()=> navigate("/")}/>
             <Login>
                 <div>
                     <p>Login</p>
@@ -12,12 +14,18 @@ export default function Header() {
                 </div>
                 <ion-icon name="person-outline"></ion-icon>
             </Login>
+            <Promo>
+                <hr/>
+            <h2>FRETE GRÁTIS PARA TODO BRASIL</h2>
+            <hr/>
+            </Promo>
         </StyleHeader>
     )
 }
 
 const StyleHeader = styled.div`
-    position: relative;
+    position: fixed;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100vw;
@@ -42,6 +50,7 @@ const StyleHeader = styled.div`
     img{
         width: 121px;
         height: 107px;
+        cursor: pointer;
     }
 `
 
@@ -54,10 +63,44 @@ const Login = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     ion-icon{
         font-size: 35px;
     }
     p{
         font-size: 12px;
+    }
+`
+
+const Promo = styled.div`
+    background-color: #d6ffad;
+    height: 20px;
+    position: absolute;
+    bottom:-17px;
+    margin: auto;
+    width: 100.48%;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Raleway';
+    h2{
+        margin: auto;
+        font-size: 12px;
+        line-height: 14px;
+        color: #000000;
+    }
+    >hr{
+        position: absolute;
+        width: 100vw;
+        border: 0;
+        border: 1px solid #000000;
+        bottom: -40%;
+        z-index: 3;
+    }
+    hr{
+        position: absolute;
+        width: 99.5vw;
+        border: 0;
+        border: 1px solid #000000;
+        top:-40%;
     }
 `
