@@ -80,7 +80,7 @@ export default function Cadastrar(){
                 <FormularioCadastro>
                     {formCadastro}
                 </FormularioCadastro>
-                <StyledLink to="/produtos"><h1>Já tem conta?</h1></StyledLink>
+                <StyledLink to="/login"><h1>Já tem conta?</h1></StyledLink>
             </Container>
         </>
     );
