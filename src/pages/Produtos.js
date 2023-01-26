@@ -13,7 +13,6 @@ export default function Produtos() {
         api.get(`/`)
             .then(res => {
                 setProduto(res.data)
-                console.log(res.data)
             })
             .catch(err => alert(err.response.data.message))
     },[])
@@ -27,7 +26,7 @@ export default function Produtos() {
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Alimentação" &&
-                        <Produto key={p._id} p={p}/>)
+                        <Produto key={p.obs} p={p}/>)
                 }
             </Categoria>
             <Categoria>
@@ -37,7 +36,7 @@ export default function Produtos() {
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Acessórios" &&
-                        <Produto key={p._id} p={p}/>
+                        <Produto key={p.descricao} p={p}/>
                     )
                 }
             </Categoria>
@@ -50,7 +49,7 @@ export default function Produtos() {
                         p.categoria === "Higiene" &&
                         <>
                         <Produto key={p._id} p={p}/>
-                        <Produto key={p._id} p={p}/>
+                        <Produto key={p.nome} p={p}/>
                         </>
                     )
                 }

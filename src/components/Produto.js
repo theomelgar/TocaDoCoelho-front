@@ -18,6 +18,9 @@ export default function Produto({p}){
 
 const StyleProduto = styled.div`
     cursor: pointer;
+    :hover{
+        transform: scale(1.1);
+    }
     margin-top: 50px;
     position: relative;
     display: flex;

@@ -1,23 +1,38 @@
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/logo.png"
+import { InfoContext } from "../context/info"
 export default function Header() {
     const navigate = useNavigate()
+    const { UserData,setUserData } = useContext(InfoContext)
+    const signout = () => {
+        localStorage.clear()
+        setUserData({})
+        navigate('/')
+    }
     return (
         <StyleHeader>
             <h1>Toca do Coelho</h1>
-            <img src={logo} alt={"Logo"} onClick={()=> navigate("/")}/>
-            <Login onClick={()=> navigate ("/login")}>
+            <img src={logo} alt={"Logo"} onClick={() => navigate("/")} />
+            <Login onClick={() => UserData.nome ? navigate("/") : navigate("/login")}>
                 <div>
-                    <p>Login</p>
-                    <p>Cadastro</p>
+                    {UserData.nome ?
+                        <p1>{UserData.nome.split(" ")[0]}</p1>
+                        : <>
+                            <p>Login</p>
+                            <p>Cadastro</p>
+                        </>
+                    }
                 </div>
-                <ion-icon name="person-outline"></ion-icon>
+                {!UserData.nome ? <ion-icon name="person-outline"></ion-icon>
+                :<ion-icon onClick={signout} name="log-out-outline" />
+                }
             </Login>
             <Promo>
-                <hr/>
-            <h2>FRETE GRÁTIS PARA TODO BRASIL</h2>
-            <hr/>
+                <hr />
+                <h2>FRETE GRÁTIS PARA TODO BRASIL</h2>
+                <hr />
             </Promo>
         </StyleHeader>
     )
