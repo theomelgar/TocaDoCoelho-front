@@ -80,7 +80,7 @@ export default function Cadastrar(){
                 <FormularioCadastro>
                     {formCadastro}
                 </FormularioCadastro>
-                <StyledLink to="/produtos"><h1>Já tem conta? Faça o login!</h1></StyledLink>
+                <StyledLink to="/produtos"><h1>Já tem conta?</h1></StyledLink>
             </Container>
         </>
     );
@@ -181,5 +181,13 @@ const StyledLink = styled(Link)`
     
     &:hover{
         text-decoration: underline;
+    }
+
+    h1 {
+        font-family: Raleway;
+        font-size: 25px;
+        font-weight: 400;
+        line-height: 29px;
+        letter-spacing: 0em;
     }
 `;
