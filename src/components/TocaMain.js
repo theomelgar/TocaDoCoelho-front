@@ -5,6 +5,7 @@ import IdProduto from "../pages/IdProduto";
 import Produtos from "../pages/Produtos";
 import Cadastro from "../pages/Cadastro";
 import Entrar from "../pages/Entrar";
+import Finalizar from "../pages/Finalizar";
 
 export default function TocaMain() {
 
@@ -16,7 +17,7 @@ export default function TocaMain() {
                         <Route path="/" element={<Produtos />} />
                         <Route path="/produtos/:id" element={<IdProduto />} />
                         <Route path="/carrinho" />
-                        <Route path="/finalizar" />
+                        <Route path="/finalizar" element={<Finalizar />}/>
                         <Route path="/login" element={<Entrar />}/>
                         <Route path="/cadastro" element={<Cadastro/>} />
                     </Routes>
