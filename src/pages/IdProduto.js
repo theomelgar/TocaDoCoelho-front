@@ -42,12 +42,14 @@ export default function IdProduto() {
 
         setItens(itens+qtd)
         setTotal((Number(total)+Number(produto.valor)*qtd).toFixed(2))
+        const t = (Number(total)+Number(produto.valor)*qtd).toFixed(2)
         const data = {
-            produto:produto._id,
+            produto:produto.nome,
             quantidade:qtd,
-            total:total
+            total:t
         }
-        if(!cesta.includes(produto._id)) setCesta([...cesta, data])
+        if(!cesta.includes(produto.nome)) setCesta([...cesta, data])
+        setQtd(1)
         
         console.log(data)
         
