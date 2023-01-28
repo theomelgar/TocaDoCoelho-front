@@ -48,7 +48,6 @@ export default function IdProduto() {
             total:total
         }
         if(!cesta.includes(produto._id)) setCesta([...cesta, data])
-        setQtd(1)
         
         console.log(data)
         
@@ -139,6 +138,7 @@ const Valores = styled.div`
 
 const ComprarBtn = styled.div`
     cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     :hover{
         opacity: 0.8;
         transform: scale(1.1);

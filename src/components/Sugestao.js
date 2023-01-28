@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { api } from "../services/auth"
 import Produto from "./Produto"
 
-export default function Sugestao({nome}){
+export default function Sugestao({ nome }) {
     const [produto, setProduto] = useState([])
     useEffect(() => {
         api.get(`/`)
@@ -12,12 +12,14 @@ export default function Sugestao({nome}){
                 console.log(res.data)
             })
             .catch(err => alert(err.response.data.message))
-    },[])
-    return(
+    }, [])
+    return (
         <Sugestoes>
             <StyleSugestao>
-            <span>Veja mais</span>
-                {produto && produto.map((p)=> p.nome!== nome && <Produto key={p._id} p={p}/> )}
+                <span>Veja mais</span>
+                <div>
+                    {produto && produto.map((p) => p.nome !== nome && <Produto key={p._id} p={p} />)}
+                </div>
             </StyleSugestao>
         </Sugestoes>
     )
@@ -28,11 +30,7 @@ const Sugestoes = styled.div`
 `
 
 const StyleSugestao = styled.div`
-   display: -webkit-box;
-   overflow: scroll;
-   gap: 30px;
    margin-top: 50px;
-   margin-left: 3% ;
    position: relative;
    span{
     position: absolute;
@@ -43,4 +41,11 @@ const StyleSugestao = styled.div`
     line-height: 29px;
     color: #274D00;
    }
+   >div{
+        margin: 0 10px;
+        position: relative;
+        display: -webkit-box;
+        overflow: auto;
+        height: 300px;
+    }
 `

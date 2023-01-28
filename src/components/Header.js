@@ -3,13 +3,27 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/logo.png"
 import { InfoContext } from "../context/info"
+import { api } from "../services/auth"
+
 export default function Header() {
     const navigate = useNavigate()
-    const { UserData,setUserData } = useContext(InfoContext)
-    const signout = () => {
-        localStorage.clear()
-        setUserData({})
-        navigate('/')
+    const { UserData, setUserData } = useContext(InfoContext)
+    const token = UserData.token
+    console.log(UserData)
+    const data={
+        id:`63d369f64b7e0ab2873827d3`
+    }
+    function signout(){
+        api.delete("/", data)
+            .then((res) => {
+                console.log(res)
+                localStorage.clear()
+                setUserData({})
+                navigate('/')       
+            })
+            .catch(()=>{
+            alert(token);
+        })
     }
     return (
         <StyleHeader>
@@ -18,15 +32,15 @@ export default function Header() {
             <Login onClick={() => UserData.nome ? navigate("/") : navigate("/login")}>
                 <div>
                     {UserData.nome ?
-                        <p1>{UserData.nome.split(" ")[0]}</p1>
+                        <p>{UserData.nome.split(" ")[0]}</p>
                         : <>
                             <p>Login</p>
                             <p>Cadastro</p>
                         </>
                     }
                 </div>
-                {!UserData.nome ? <ion-icon name="person-outline"></ion-icon>
-                :<ion-icon onClick={signout} name="log-out-outline" />
+                {!UserData.token ? <ion-icon name="person-outline"></ion-icon>
+                    : <ion-icon onClick={signout} name="log-out-outline" />
                 }
             </Login>
             <Promo>
@@ -113,7 +127,7 @@ const Promo = styled.div`
     }
     hr{
         position: absolute;
-        width: 99.5vw;
+        width: 100vw;
         border: 0;
         border: 1px solid #000000;
         top:-40%;
