@@ -92,8 +92,6 @@ const Login = styled.div`
         letter-spacing: 0em;
         text-align: left;
         color: #274D00;
-
-
     }
 `
 
@@ -148,6 +146,7 @@ const FormularioLogin = styled.div`
         border: none;
         background-color: #FF7C7C;
         cursor: pointer;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
 
 
