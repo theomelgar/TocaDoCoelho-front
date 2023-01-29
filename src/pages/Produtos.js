@@ -27,7 +27,7 @@ export default function Produtos() {
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Alimentação" &&
-                        <Produto key={p.obs} p={p} />)
+                        <Produto key={p.nome} p={p} />)
                 }
                 </div>
             </Categoria>
@@ -39,7 +39,7 @@ export default function Produtos() {
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Acessórios" &&
-                        <Produto key={p.descricao} p={p} />
+                        <Produto key={p.nome} p={p} />
                     )
                 }
                 </div>
@@ -53,7 +53,6 @@ export default function Produtos() {
                     produto.map((p) =>
                         p.categoria === "Higiene" &&
                         <>
-                            <Produto key={p._id} p={p} />
                             <Produto key={p.nome} p={p} />
                         </>
                     )

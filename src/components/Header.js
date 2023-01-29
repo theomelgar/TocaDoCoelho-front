@@ -8,22 +8,10 @@ import { api } from "../services/auth"
 export default function Header() {
     const navigate = useNavigate()
     const { UserData, setUserData } = useContext(InfoContext)
-    const token = UserData.token
-    console.log(UserData)
-    const data={
-        id:`63d369f64b7e0ab2873827d3`
-    }
-    function signout(){
-        api.delete("/", data)
-            .then((res) => {
-                console.log(res)
-                localStorage.clear()
-                setUserData({})
-                navigate('/')       
-            })
-            .catch(()=>{
-            alert(token);
-        })
+    function signout() {
+        localStorage.clear()
+        setUserData({})
+        navigate('/')
     }
     return (
         <StyleHeader>
@@ -40,7 +28,7 @@ export default function Header() {
                     }
                 </div>
                 {!UserData.token ? <ion-icon name="person-outline"></ion-icon>
-                    : <ion-icon onClick={signout} name="log-out-outline" />
+                    : <ion-icon onClick={()=>signout} name="log-out-outline" />
                 }
             </Login>
             <Promo>
