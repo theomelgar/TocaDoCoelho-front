@@ -13,24 +13,22 @@ export default function IdProduto() {
     const [produto, setProduto] = useState([])
     const { id } = useParams()
     const [qtd, setQtd] = useState(1)
-    const {setTotal,setItens,setCesta, itens, total,cesta} = useContext(ItensContext)
+    const { setTotal, setItens, setCesta, itens, total, cesta } = useContext(ItensContext)
 
     useEffect(() => {
         api.get(`/produtos/${id}`)
-        .then(res => {
-            setProduto(res.data)
-            setQtd(1)
+            .then(res => {
+                setProduto(res.data)
+                setQtd(1)
 
-        })
-        .catch(err => {
-            alert(err.data)
-        })
+            })
+            .catch(err => {
+                alert(err.data)
+            })
 
     }, [id])
-    
 
     const quantidade = (operador) => {
-
         if (operador === "+") setQtd(qtd + 1)
         else {
             if (qtd === 1) return
@@ -39,20 +37,35 @@ export default function IdProduto() {
     }
 
     const adicionar = () => {
+        let vAntes
+        let qAntes
+        cesta.map((p) => {
+            if (p.produto === produto.nome) {
+                let index = cesta.indexOf(p)
+                vAntes = Number(cesta[index].valor)
+                qAntes = Number(cesta[index].quantidade)
+                setCesta(cesta.splice(index))
+            }
+        })
 
-        setItens(itens+qtd)
-        setTotal((Number(total)+Number(produto.valor)*qtd).toFixed(2))
-        const t = (Number(total)+Number(produto.valor)*qtd).toFixed(2)
+        console.log("nao repetido")
+        if(qAntes > 0)setItens(itens + qtd - qAntes)
+        else setItens(itens + qtd)
+        if(vAntes > 0)setTotal((Number(total) + Number(produto.valor) * qtd - vAntes).toFixed(2))
+        else setTotal((Number(total) + Number(produto.valor) * qtd).toFixed(2))
+        const valor = (Number(produto.valor) * qtd).toFixed(2)
         const data = {
-            produto:produto.nome,
-            quantidade:qtd,
-            total:t
+            produto: produto.nome,
+            quantidade: qtd,
+            valor: valor,
         }
-        if(!cesta.includes(produto.nome)) setCesta([...cesta, data])
-        setQtd(1)
-        
-        console.log(data)
-        
+        console.log({
+            produto: produto.nome,
+            quantidade: qtd,
+            valor: valor,
+        })
+        return setCesta([...cesta, data])
+
     }
     console.log(cesta)
     return (
@@ -64,7 +77,7 @@ export default function IdProduto() {
                 <h1>Descrição</h1>
                 <h2>{produto.descricao}</h2>
                 <Valores>
-                    <p>R$ {(Number(produto.valor)*qtd).toFixed(2)}</p>
+                    <p>R$ {(Number(produto.valor) * qtd).toFixed(2)}</p>
                     <button onClick={() => quantidade("+")}>+</button>
                     <p>{qtd}</p>
                     <button onClick={() => quantidade("-")}>-</button>

@@ -3,65 +3,64 @@ import Header from "../components/Header.js";
 import styled from "styled-components";
 import { useContext, useState } from "react"
 import { ItensContext } from "../context/itens.js";
+import Sugestao from "../components/Sugestao.js";
 
 
 export default function Carrinho() {
 
     const { cesta, total } = useContext(ItensContext)
-  
+
 
     console.log(cesta)
-    
+
     return (
 
         <StyleProdutos>
 
             <Header />
-
             <h1> Carrinho </h1>
-
             <Compras>
-
-
-            {cesta.map((c) => (
+                {cesta ? cesta.map((c) => 
+                    <Compra> <h2> {c.produto} - Qtd: {c.quantidade} - R$ {c.valor}</h2> </Compra>
                 
-                
-                <Compra> <h2> {c.produto} - Qtd: {c.quantidade} - R$ {c.total}</h2> </Compra>)
+                ) :
+                    (<Compra><h2>Seu carrinho ainda esta vazio, adicione produtos</h2></Compra>)
+                }
 
-                )}
-
-                <ComprarBtn>COMPRAR</ComprarBtn>
-
-                <Botao>Continuar comprando</Botao>
-
+                <h3> Total: R$ {total} </h3>
             </Compras>
-
-            <h2> Total: R$ {total} </h2>
-
-
+            <ComprarBtn>COMPRAR</ComprarBtn>
+            <Botao>Continuar comprando</Botao>
+            <Sugestao/>
             <Footer />
-
-        </StyleProdutos>
+        </StyleProdutos >
     )
 }
 
 const StyleProdutos = styled.div`
-   
+    position: relative;
     width: 100vw;
     height: 100vh;
-    margin: 150px 0; 
+    margin: 150px 0 50px 0; 
+    >h1{
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 29px;
+        color: #274D00;
+        margin-bottom: 30px;
+    }
 `
-
 
 const ComprarBtn = styled.div`
     cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     :hover{
         opacity: 0.8;
         transform: scale(1.1);
     }
-    position: absolute;
-    left: 40%;
-    bottom: -135%;
+    margin: 20px auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,9 +74,8 @@ const ComprarBtn = styled.div`
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
-    line-height: 23px;`
-
-
+    line-height: 23px;
+`
 
 const Compras = styled.div`
     display: flex;
@@ -85,34 +83,49 @@ const Compras = styled.div`
     background: blue;
     gap: 10px;
     position: relative;
-    `
+    top: 0%;
+    left: 0%;
+    background-color:#d6ffad;
+    font-size: 25px;
+    line-height: 30px;
+    color: #274D00;
+    font-family: 'Rubik';
+    font-style: normal;
+    h2{
+        font-weight: 400;
+    }
+    h3{
+        font-weight: 700;   
+        text-align: end;
+    }
+`
 
 const Compra = styled.div`
     font-family: Rubik;
     font-size: 25px;
     color: green;
-    background: red;
-    `
+    padding-left: 20px;
+`
 
 const Botao = styled.div`
-cursor: pointer;
-:hover{
-    opacity: 0.8;
-    transform: scale(1.1);
-}
-position: absolute;
-left: 40%;
-bottom: -240%;
-display: flex;
-justify-content: center;
-align-items: center;
-color: #274D00;
-width: 242px;
-height: 41px;
-border-radius: 10px;
-border: none;
-font-family: 'Raleway';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 23px;`
+    cursor: pointer;
+    :hover{
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+    text-decoration:underline;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #274D00;
+    width: 242px;
+    height: 41px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+`
