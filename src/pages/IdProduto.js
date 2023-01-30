@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useContext } from "react"
 import { useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
@@ -14,6 +14,7 @@ export default function IdProduto() {
     const { id } = useParams()
     const [qtd, setQtd] = useState(1)
     const { setTotal, setItens, setCesta, itens, total, cesta } = useContext(ItensContext)
+    const navigate = useNavigate()
 
     useEffect(() => {
         api.get(`/produtos/${id}`)
@@ -49,9 +50,9 @@ export default function IdProduto() {
         })
 
         console.log("nao repetido")
-        if(qAntes > 0)setItens(itens + qtd - qAntes)
+        if (qAntes > 0) setItens(itens + qtd - qAntes)
         else setItens(itens + qtd)
-        if(vAntes > 0)setTotal((Number(total) + Number(produto.valor) * qtd - vAntes).toFixed(2))
+        if (vAntes > 0) setTotal((Number(total) + Number(produto.valor) * qtd - vAntes).toFixed(2))
         else setTotal((Number(total) + Number(produto.valor) * qtd).toFixed(2))
         const valor = (Number(produto.valor) * qtd).toFixed(2)
         const data = {
@@ -64,6 +65,7 @@ export default function IdProduto() {
             quantidade: qtd,
             valor: valor,
         })
+        navigate("/carrinho")
         return setCesta([...cesta, data])
 
     }

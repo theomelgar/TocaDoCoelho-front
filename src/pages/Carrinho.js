@@ -1,15 +1,16 @@
 import Footer from "../components/Footer.js";
 import Header from "../components/Header.js";
 import styled from "styled-components";
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { ItensContext } from "../context/itens.js";
 import Sugestao from "../components/Sugestao.js";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Carrinho() {
 
     const { cesta, total } = useContext(ItensContext)
-
+    const navigate = useNavigate()
 
     console.log(cesta)
 
@@ -30,7 +31,7 @@ export default function Carrinho() {
                 <h3> Total: R$ {total} </h3>
             </Compras>
             <ComprarBtn>COMPRAR</ComprarBtn>
-            <Botao>Continuar comprando</Botao>
+            <Botao onClick={() => navigate(`/`)}>Continuar comprando</Botao>
             <Sugestao/>
             <Footer />
         </StyleProdutos >
@@ -49,6 +50,7 @@ const StyleProdutos = styled.div`
         font-size: 25px;
         line-height: 29px;
         color: #274D00;
+        margin-left: 15px;
         margin-bottom: 30px;
     }
 `
@@ -83,6 +85,7 @@ const Compras = styled.div`
     background: blue;
     gap: 10px;
     position: relative;
+    margin: 20px;
     top: 0%;
     left: 0%;
     background-color:#d6ffad;

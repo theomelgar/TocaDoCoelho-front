@@ -35,7 +35,7 @@ const StyleSugestao = styled.div`
    position: relative;
    span{
     position: absolute;
-    left: 3%;
+    left: 15px;
     font-family: "Raleway";
     font-weight: 700;
     font-size: 25px;
