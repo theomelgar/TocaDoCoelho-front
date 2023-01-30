@@ -8,7 +8,6 @@ import pix from "../assets/pix.png";
 import boleto from "../assets/boleto.png";
 import cartao from "../assets/visa.png";
 
-
 export default function FinalizarCompra() {
     const { UserData } = useContext(InfoContext);
     const { setItens, total, setTotal, cesta, setCesta } = useContext(ItensContext)
@@ -19,7 +18,7 @@ export default function FinalizarCompra() {
     const [pagamentoSelecionado, setPagamentoSelecionado] = useState("");
     const formasDePagamento = [{ forma: "PIX", logo: pix }, { forma: "Boleto", logo: boleto }, { forma: "Cartão", logo: cartao }];
     const navigate = useNavigate();
-
+    
     function handleFinalizar(e) {
         e.preventDefault();
         var now = new Date()
@@ -30,7 +29,7 @@ export default function FinalizarCompra() {
             formaDePagamento: pagamentoSelecionado,
             cesta: cesta,
             total: total,
-            idUsuario:UserData.idUsuario,
+            idUsuario: UserData.idUsuario,
             criadoEm: now
         }
 
@@ -80,7 +79,7 @@ export default function FinalizarCompra() {
                         name="nome"
                         value={nome}
                         minLength="3"
-                        onChange={(e) => setNome(e.target.value )}
+                        onChange={(e) => setNome(e.target.value)}
                         required />
                     <div><span>Email:</span></div>
                     <input
@@ -128,7 +127,7 @@ export default function FinalizarCompra() {
     }
 
     const formFinalizar = montarFormularioFinalizar();
-    
+
     return (
         <>
             <Container>

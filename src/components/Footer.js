@@ -17,7 +17,7 @@ export default function Footer() {
             </h1>
 
             <h2>
-                {total ? "TOTAL:R$"+Number(total).toFixed(2) : "ADICIONE PRODUTOS"}
+                {total>0 ? "TOTAL:R$"+Number(total).toFixed(2) : "ADICIONE PRODUTOS"}
             </h2>
         </StyleFooter>
     )

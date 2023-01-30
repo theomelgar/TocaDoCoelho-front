@@ -6,6 +6,7 @@ import Footer from "../components/Footer"
 export default function Finalizar() {
     return (
         <StyleFinalizar>
+            {window.scrollTo(0, 0)}
             <Header></Header>
             <FinalizarCompra></FinalizarCompra>
             <Footer></Footer>

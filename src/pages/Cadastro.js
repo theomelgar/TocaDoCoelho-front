@@ -5,6 +5,7 @@ import Cadastrar from "../components/Cadastro.js";
 export default function Cadastro() {
     return (
         <StyleCadastro>
+            {window.scrollTo(0, 0)}
             <Header></Header>
             <Cadastrar></Cadastrar>
         </StyleCadastro>

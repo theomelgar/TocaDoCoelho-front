@@ -70,6 +70,7 @@ export default function IdProduto() {
     console.log(cesta)
     return (
         <StyleProduto>
+            {window.scrollTo(0, 0)}
             <Header />
             <Item>
                 <h1>{produto.nome}</h1>

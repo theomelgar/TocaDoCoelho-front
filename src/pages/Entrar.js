@@ -5,6 +5,7 @@ import Logar from "../components/Login.js";
 export default function Entrar() {
     return (
         <StyleLogar>
+            {window.scrollTo(0, 0)}
             <Header></Header>
             <Logar></Logar>
         </StyleLogar>

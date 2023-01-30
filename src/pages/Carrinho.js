@@ -10,17 +10,17 @@ import { InfoContext } from "../context/info.js";
 
 export default function Carrinho() {
 
-    const { cesta,setCesta, total, setTotal, itens, setItens } = useContext(ItensContext)
+    const { cesta, setCesta, total, setTotal, itens, setItens } = useContext(ItensContext)
     const { UserData } = useContext(InfoContext)
     const navigate = useNavigate()
 
     console.log(cesta)
 
-    function removerItem(index, retiraItens, retirarValor){
+    function removerItem(index, retiraItens, retirarValor) {
         setTotal((Number(total) - Number(retirarValor)).toFixed(2));
 
         setItens((Number(itens) - Number(retiraItens)));
-        
+
         const cestaAtualizada = cesta.filter((p, idx) => idx !== index);
         setCesta(cestaAtualizada);
     }
@@ -28,23 +28,27 @@ export default function Carrinho() {
     return (
 
         <StyleProdutos>
-
+            {window.scrollTo(0, 0)}
             <Header />
             <h1> Carrinho </h1>
             <Compras>
-                {cesta ? cesta.map((c, index) => 
-    
-                    <Compra> <h2> {c.produto} - Qtd: {c.quantidade} - R$ {c.valor}</h2> <BotaoDeletar type="button" onClick={() => removerItem(index, (c.quantidade), (c.valor))}><ion-icon name="close-circle-outline"></ion-icon></BotaoDeletar> </Compra>
-                
+                {cesta.length > 0 ? cesta.map((c, index) =>
+
+                    <Compra> <h2> {c.produto} - Qtd: {c.quantidade} - R$ {c.valor}</h2>
+                        <BotaoDeletar type="button" onClick={() => removerItem(index, (c.quantidade), (c.valor))}>
+                            <ion-icon name="close-circle-outline"></ion-icon>
+                        </BotaoDeletar>
+                    </Compra>
+
                 ) :
                     (<Compra><h2>Seu carrinho ainda esta vazio, adicione produtos</h2></Compra>)
-                } 
+                }
 
                 <h3> Total: R$ {total} </h3>
             </Compras>
-            <ComprarBtn onClick={() => UserData.nome ? navigate(`/finalizar`) : navigate(`/login`)}>COMPRAR</ComprarBtn>
+            <ComprarBtn disabled={cesta.length > 0 ? false : true} onClick={() => UserData.nome ? navigate(`/finalizar`) : navigate(`/login`)}>COMPRAR</ComprarBtn>
             <Botao onClick={() => navigate(`/`)}>Continuar comprando</Botao>
-            <Sugestao/>
+            <Sugestao />
             <Footer />
         </StyleProdutos >
     )
@@ -67,7 +71,7 @@ const StyleProdutos = styled.div`
     }
 `
 
-const ComprarBtn = styled.div`
+const ComprarBtn = styled.button`
     cursor: pointer;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     :hover{
@@ -89,6 +93,10 @@ const ComprarBtn = styled.div`
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
+    &:disabled{
+        background-color: #FF7C7C;
+        opacity: 70%;
+    }
 `
 
 const Compras = styled.div`

@@ -18,6 +18,7 @@ export default function Produtos() {
     }, [])
     return (
         <StyleProdutos>
+            {window.scrollTo(0, 0)}
             <Header />
             <Categoria>
                 <h1>
