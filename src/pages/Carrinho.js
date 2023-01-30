@@ -10,11 +10,20 @@ import { InfoContext } from "../context/info.js";
 
 export default function Carrinho() {
 
-    const { cesta, total } = useContext(ItensContext)
+    const { cesta,setCesta, total, setTotal, itens, setItens } = useContext(ItensContext)
     const { UserData } = useContext(InfoContext)
     const navigate = useNavigate()
 
     console.log(cesta)
+
+    function removerItem(index, retiraItens, retirarValor){
+        setTotal((Number(total) - Number(retirarValor)).toFixed(2));
+
+        setItens((Number(itens) - Number(retiraItens)));
+        
+        const cestaAtualizada = cesta.filter((p, idx) => idx !== index);
+        setCesta(cestaAtualizada);
+    }
 
     return (
 
@@ -23,12 +32,13 @@ export default function Carrinho() {
             <Header />
             <h1> Carrinho </h1>
             <Compras>
-                {cesta ? cesta.map((c) => 
-                    <Compra> <h2> {c.produto} - Qtd: {c.quantidade} - R$ {c.valor}</h2> </Compra>
+                {cesta ? cesta.map((c, index) => 
+    
+                    <Compra> <h2> {c.produto} - Qtd: {c.quantidade} - R$ {c.valor}</h2> <BotaoDeletar type="button" onClick={() => removerItem(index, (c.quantidade), (c.valor))}><ion-icon name="close-circle-outline"></ion-icon></BotaoDeletar> </Compra>
                 
                 ) :
                     (<Compra><h2>Seu carrinho ainda esta vazio, adicione produtos</h2></Compra>)
-                }
+                } 
 
                 <h3> Total: R$ {total} </h3>
             </Compras>
@@ -110,6 +120,10 @@ const Compra = styled.div`
     font-size: 25px;
     color: green;
     padding-left: 20px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 `
 
 const Botao = styled.div`
@@ -133,4 +147,13 @@ const Botao = styled.div`
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
+`
+
+
+const BotaoDeletar = styled.div`
+    cursor: pointer;
+    ion-icon{
+        font-size: 30px;
+    }
+
 `
