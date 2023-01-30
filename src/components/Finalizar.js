@@ -1,6 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { api } from "../services/auth.js"
 import { InfoContext } from "../context/info.js";
 import { ItensContext } from "../context/itens.js";
@@ -9,30 +9,28 @@ import boleto from "../assets/boleto.png";
 import cartao from "../assets/visa.png";
 
 
-export default function FinalizarCompra(){
-    const { UserData, setUserData } = useContext(InfoContext);
-    const { itens,setItens, total, setTotal, cesta, setCesta } = useContext(ItensContext)
+export default function FinalizarCompra() {
+    const { UserData } = useContext(InfoContext);
+    const { setItens, total, setTotal, cesta, setCesta } = useContext(ItensContext)
     const token = UserData.token;
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
-    const [cep,setCep] = useState("");
+    const [cep, setCep] = useState("");
     const [pagamentoSelecionado, setPagamentoSelecionado] = useState("");
-    const [selecionado, setSelecionado] = useState(false);
-    const [botaoSelecionado, setBotaoSelecionado] = useState(0);
-    const formasDePagamento = [{forma: "pix", logo: "pix"}, {forma: "boleto", logo: "boleto"}, {forma: "cartao", logo: "cartao"}];
+    const formasDePagamento = [{ forma: "PIX", logo: pix }, { forma: "Boleto", logo: boleto }, { forma: "Cartão", logo: cartao }];
     const navigate = useNavigate();
-
-    function handleFinalizar(e){
+    
+    function handleFinalizar(e) {
         e.preventDefault();
-        
-
+        var now = new Date()
         const body = {
             nome: nome,
             email: email,
             cep: cep,
             formaDePagamento: pagamentoSelecionado,
             cesta: cesta,
-            total: total
+            total: total,
+            criadoEm: now
         }
 
         const config = {
@@ -43,7 +41,7 @@ export default function FinalizarCompra(){
 
         const promise = api.post(`/finalizar`, body, config);
 
-        promise.then( response => {
+        promise.then(response => {
             console.log(response);
             alert("Compra realizada com sucesso!");
 
@@ -57,7 +55,7 @@ export default function FinalizarCompra(){
 
             navigate("/");
         });
-    
+
         promise.catch(err => {
             const message = err.response.statusText;
             console.log(message);
@@ -66,65 +64,79 @@ export default function FinalizarCompra(){
             setNome("");
             setEmail("");
             setCep("");
-            
+
             navigate("/login");
         });
     }
 
-
-    function montarBotoesFormaDePagamento(){
-
-        return formasDePagamento.map((FormaDePagamento, index) => {
-            return (
-                <button className={`botao ${botaoSelecionado === index ? "ativo" : "inativo"}`} type="button" key={index} id={index} selecionado={index} onClick={() => selecionarFormaDePagamento(FormaDePagamento.forma, index)}>{FormaDePagamento.logo}</button>
-            );
-        });
-    }
-
-    function selecionarFormaDePagamento(pagamento, index){
-        setPagamentoSelecionado(pagamento);
-        setBotaoSelecionado(index);
-        console.log("selecionado");
-    }
-
-    const botoes = montarBotoesFormaDePagamento();
-
-
-    function montarFormularioFinalizar(){
-        return(
+    function montarFormularioFinalizar() {
+        return (
             <>
                 <form onSubmit={handleFinalizar} id="formularioFinalizar">
                     <div><span>Nome:</span></div>
-                    <input type="text" name="nome" value={nome} onChange={(e)=> setNome(e.target.nome)} required/>
+                    <input
+                        type="text"
+                        name="nome"
+                        value={nome}
+                        onChange={(e) => setNome(e.target.nome)}
+                        required />
                     <div><span>Email:</span></div>
-                    <input type="email" name="email" value={email} onChange={(e)=> setEmail(e.target.email)} required/>
+                    <input
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.email)}
+                        required />
                     <div><span>CEP:</span></div>
-                    <input type="number" name="cep" value={cep} onChange={(e)=> setCep(e.target.cep)} required />
+                    <input
+                        type="text"
+                        name="cep"
+                        value={cep}
+                        minlength="8"
+                        onChange={e => setCep(e.target.value
+                            .replace(/\D/g, "")
+                            .replace(/(\d{5})(\d{3})/, "$1-$2")
+                            .substring(0, 9))}
+                        required />
                     <FormaDePagamento>
-                        <h1>Forma de pagamento</h1>
-                        <div>
-                            <Pagamentos>{botoes}</Pagamentos>
-                            <Total><h1>Total - R${total}</h1></Total>
-                            <button type="submit" id="formularioFinalizar"><span>Finalizar</span></button>
-                            <button><StyledLink to="/"><span>Continuar comprando</span></StyledLink></button>
-                        </div>
+                        <h1>Forma de pagamento: {pagamentoSelecionado}</h1>
+                        <Pagamentos>
+                            {formasDePagamento.map((FormaDePagamento) => {
+                                return (
+                                    <button
+                                        type="button"
+                                        key={FormaDePagamento.forma}
+                                        id={FormaDePagamento.forma}
+                                        onClick={() => setPagamentoSelecionado(FormaDePagamento.forma)}>
+                                        <img src={FormaDePagamento.logo} alt={FormaDePagamento.forma}/>
+                                    </button>
+                                )
+                            })}
+                        </Pagamentos>
+                        <Total>
+                            Total - R${total}
+                        </Total>
+                        <Finalizar type="submit" id="formularioFinalizar">
+                            Finalizar
+                        </Finalizar>
                     </FormaDePagamento>
                 </form>
-
- 
             </>
         );
     }
 
     const formFinalizar = montarFormularioFinalizar();
 
-    return(
+    return (
         <>
             <Container>
-                <Finalizar><h1>Finalizar</h1></Finalizar>
+                <h1>Finalizar compra</h1>
                 <FormularioFinalizar>
                     {formFinalizar}
                 </FormularioFinalizar>
+                <Continuar onClick={() => navigate("/")}>
+                    Continuar comprando
+                </Continuar>
             </Container>
         </>
     );
@@ -134,18 +146,9 @@ export default function FinalizarCompra(){
 
 
 const Container = styled.div`
-    margin-top: 90px;
-    margin-left: 30px;
-    margin-right: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-`;
-
-const Finalizar = styled.div`
-
-    h1{
+    margin:150px 0;
+    color: #274D00;
+    >h1{
         font-family: Raleway;
         font-size: 25px;
         font-weight: 700;
@@ -153,16 +156,25 @@ const Finalizar = styled.div`
         letter-spacing: 0em;
         text-align: left;
         color: #274D00;
-
-
+        margin-bottom: 10px;
     }
+`;
+
+const Continuar = styled.button`
+        margin: 0 55px;
+        border: none;
+        background-color: #90BF60;
+        text-decoration: underline;
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 26px;
 `
 
 const FormularioFinalizar = styled.div`
     display: flex;
-    flex-direction: column;
-    align-self: start;
-    
+    flex-direction: column;    
 
     input {
         width: 100%;
@@ -177,39 +189,7 @@ const FormularioFinalizar = styled.div`
         color:#274D00;
         border-radius:5px;
         border: 1px solid #D5D5D5;
-
-        ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: #274D00;
-            opacity: 1; /* Firefox */
-        }
-
-        :-ms-input-placeholder { /* Internet Explorer 10-11 */
-            color: #274D00;
-        }
-
-        ::-ms-input-placeholder { /* Microsoft Edge */
-            color: #274D00;
-        }
-
     }
-
-    button {
-        width: 100%;
-        height: 50px;
-        font-family: Raleway;
-        font-size: 30px;
-        font-weight: 700;
-        line-height: 35px;
-        letter-spacing: 0em;
-        text-align: center;
-        color:#274D00;
-        border-radius: 5px;
-        border: none;
-        background-color: #FF7C7C;
-        cursor: pointer;
-        margin-bottom: 5px;
-    }
-
     span {
         font-family: Raleway;
         font-size: 25px;
@@ -222,109 +202,74 @@ const FormularioFinalizar = styled.div`
 
 `;
 
+const Finalizar = styled.button`
+    width: 100%;
+    height: 50px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    text-align: center;
+    color:#274D00;
+    border-radius: 5px;
+    border: none;
+    background-color: #FF7C7C;
+    cursor: pointer;
+    margin-bottom: 5px;
+`
+
 const FormaDePagamento = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 10px;
     color: #274D00;
-
-    margin-top: auto;
-    
+    margin-top: 10px;
 
     h1 {
-        font-family: Raleway;
+        font-family: Rubik;
         font-size: 25px;
         font-weight: 400;
         line-height: 29px;
         letter-spacing: 0em;
         text-align: left;
+        margin-bottom: 10px;
     }
-
-
 `;
 
-const Pagamentos =styled.div`
+const Pagamentos = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-
+    gap: 10px;
     button{
+        width: 80px;
+        height: 41px;
         display: flex;
-        flex-direction: row;
         justify-content: center;
         align-items: center;
         padding: 4px;
-
-    .botao .ativo{
-        border: 4px solid red;
-    }
-
-    .botao .inativo{
-        border: none
-    }
-
-
+        &:active{
+            transform: scale(1.1);
+            border: 4px solid green;
+        
+        }
+        
     img {        
-        width: 80px;
-        height: 42px;
-        padding: 5px;
         justify-content: center;
+        width: 99%;
     }
-    }
-
-
     
+    }
 `;
 
 const Total = styled.div`
-
     display: flex;
     flex-direction: row-reverse;
-
-    h1 {
-        font-family: Raleway;
-        font-size: 25px;
-        font-weight: 400;
-        line-height: 29px;
-        letter-spacing: 0em;
-    }
-`;
-
-const StyledLink = styled(Link)`
-  
-    color:#274D00;
-    font-family: Raleway;
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 700;
     font-size: 25px;
-    font-weight: 400;
-    line-height: 29px;
-    letter-spacing: 0em;
-    text-align: center;
-  
-`;
-
-const BotaoFormaDePagamento = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 4px;
-
-    .botao-ativo{
-        border: 4px solid red;
-    }
-
-    .botao-inativo{
-        border: none
-    }
-
-
-    img {        
-        width: 80px;
-        height: 42px;
-        padding: 5px;
-        justify-content: center;
-    }
-
+    line-height: 30px;
+    color: #274D00;
 `;
