@@ -5,11 +5,13 @@ import { useContext } from "react"
 import { ItensContext } from "../context/itens.js";
 import Sugestao from "../components/Sugestao.js";
 import { useNavigate } from "react-router-dom";
+import { InfoContext } from "../context/info.js";
 
 
 export default function Carrinho() {
 
     const { cesta, total } = useContext(ItensContext)
+    const { UserData } = useContext(InfoContext)
     const navigate = useNavigate()
 
     console.log(cesta)
@@ -30,7 +32,7 @@ export default function Carrinho() {
 
                 <h3> Total: R$ {total} </h3>
             </Compras>
-            <ComprarBtn>COMPRAR</ComprarBtn>
+            <ComprarBtn onClick={() => UserData.nome ? navigate(`/finalizar`) : navigate(`/login`)}>COMPRAR</ComprarBtn>
             <Botao onClick={() => navigate(`/`)}>Continuar comprando</Botao>
             <Sugestao/>
             <Footer />

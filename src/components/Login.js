@@ -5,17 +5,17 @@ import { api } from "../services/auth.js"
 import { InfoContext } from "../context/info.js";
 
 
-export default function Logar(){
+export default function Logar() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const { setUserData } = useContext(InfoContext);
+    const { setUserData, UserData } = useContext(InfoContext);
 
 
     const navigate = useNavigate();
 
-    function handleLogin(e){
+    function handleLogin(e) {
         e.preventDefault();
-        
+
 
         const body = {
             email,
@@ -24,11 +24,11 @@ export default function Logar(){
 
         const promise = api.post(`/login`, body);
 
-        promise.then( response => {
+        promise.then(response => {
             setUserData(response.data);
             navigate("/");
         });
-    
+
         promise.catch(err => {
             const message = err.response.statusText;
             alert(message);
@@ -40,11 +40,11 @@ export default function Logar(){
 
 
 
-    function montarFormularioLogin(){
-        return(
+    function montarFormularioLogin() {
+        return (
             <>
                 <form onSubmit={handleLogin}>
-                    <input type="email" name="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required/>
+                    <input type="email" name="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
                     <input type="password" name="senha" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} required />
                     <div>
                         <button type="submit"><span>Entrar</span></button>
@@ -56,7 +56,7 @@ export default function Logar(){
 
     const formLogin = montarFormularioLogin();
 
-    return(
+    return (
         <>
             <Container>
                 <Login><h1>Entrar</h1></Login>

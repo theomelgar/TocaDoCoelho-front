@@ -19,7 +19,7 @@ export default function FinalizarCompra() {
     const [pagamentoSelecionado, setPagamentoSelecionado] = useState("");
     const formasDePagamento = [{ forma: "PIX", logo: pix }, { forma: "Boleto", logo: boleto }, { forma: "Cartão", logo: cartao }];
     const navigate = useNavigate();
-    
+
     function handleFinalizar(e) {
         e.preventDefault();
         var now = new Date()
@@ -30,6 +30,7 @@ export default function FinalizarCompra() {
             formaDePagamento: pagamentoSelecionado,
             cesta: cesta,
             total: total,
+            idUsuario:UserData.idUsuario,
             criadoEm: now
         }
 
@@ -39,34 +40,34 @@ export default function FinalizarCompra() {
             }
         }
 
-        const promise = api.post(`/finalizar`, body, config);
+        api.post(`/finalizar`, body, config)
 
-        promise.then(response => {
-            console.log(response);
-            alert("Compra realizada com sucesso!");
+            .then(response => {
+                console.log(response);
+                alert("Compra realizada com sucesso!");
 
-            setNome("");
-            setEmail("");
-            setCep("");
-            setPagamentoSelecionado("");
-            setCesta("");
-            setTotal("");
-            setItens("");
+                setNome("");
+                setEmail("");
+                setCep("");
+                setPagamentoSelecionado("");
+                setCesta("");
+                setTotal("");
+                setItens("");
 
-            navigate("/");
-        });
+                navigate("/");
+            })
 
-        promise.catch(err => {
-            const message = err.response.statusText;
-            console.log(message);
-            alert("Faça o login para finalizar a compra!");
+            .catch(err => {
+                const message = err.response.statusText;
+                console.log(message);
+                alert("Faça o login para finalizar a compra!");
 
-            setNome("");
-            setEmail("");
-            setCep("");
+                setNome("");
+                setEmail("");
+                setCep("");
 
-            navigate("/login");
-        });
+                navigate("/login");
+            })
     }
 
     function montarFormularioFinalizar() {
@@ -78,21 +79,22 @@ export default function FinalizarCompra() {
                         type="text"
                         name="nome"
                         value={nome}
-                        onChange={(e) => setNome(e.target.nome)}
+                        minLength="3"
+                        onChange={(e) => setNome(e.target.value)}
                         required />
                     <div><span>Email:</span></div>
                     <input
                         type="email"
                         name="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.email)}
+                        onChange={(e) => setEmail(e.target.value)}
                         required />
                     <div><span>CEP:</span></div>
                     <input
                         type="text"
                         name="cep"
                         value={cep}
-                        minlength="8"
+                        minLength="8"
                         onChange={e => setCep(e.target.value
                             .replace(/\D/g, "")
                             .replace(/(\d{5})(\d{3})/, "$1-$2")
@@ -108,7 +110,7 @@ export default function FinalizarCompra() {
                                         key={FormaDePagamento.forma}
                                         id={FormaDePagamento.forma}
                                         onClick={() => setPagamentoSelecionado(FormaDePagamento.forma)}>
-                                        <img src={FormaDePagamento.logo} alt={FormaDePagamento.forma}/>
+                                        <img src={FormaDePagamento.logo} alt={FormaDePagamento.forma} />
                                     </button>
                                 )
                             })}
@@ -126,7 +128,8 @@ export default function FinalizarCompra() {
     }
 
     const formFinalizar = montarFormularioFinalizar();
-
+    var now = new Date()
+    console.log("data = "+now)
     return (
         <>
             <Container>
