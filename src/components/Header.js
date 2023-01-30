@@ -3,30 +3,34 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/logo.png"
 import { InfoContext } from "../context/info"
+import { api } from "../services/auth"
+
 export default function Header() {
     const navigate = useNavigate()
-    const { UserData,setUserData } = useContext(InfoContext)
-    const signout = () => {
+    const { UserData, setUserData } = useContext(InfoContext)
+    function signout() {
         localStorage.clear()
         setUserData({})
         navigate('/')
     }
     return (
         <StyleHeader>
-            <h1>Toca do Coelho</h1>
-            <img src={logo} alt={"Logo"} onClick={() => navigate("/")} />
+            <Logo onClick={() => navigate("/")}>
+                <img src={logo} alt={"Logo"}/>
+                <h1>Toca do Coelho</h1>
+            </Logo>
             <Login onClick={() => UserData.nome ? navigate("/") : navigate("/login")}>
                 <div>
                     {UserData.nome ?
-                        <p1>{UserData.nome.split(" ")[0]}</p1>
+                        <p>{UserData.nome.split(" ")[0]}</p>
                         : <>
                             <p>Login</p>
                             <p>Cadastro</p>
                         </>
                     }
                 </div>
-                {!UserData.nome ? <ion-icon name="person-outline"></ion-icon>
-                :<ion-icon onClick={signout} name="log-out-outline" />
+                {!UserData.token ? <ion-icon name="person-outline"></ion-icon>
+                    : <ion-icon onClick={signout} name="log-out-outline" />
                 }
             </Login>
             <Promo>
@@ -49,13 +53,19 @@ const StyleHeader = styled.div`
     border: 1px solid rgba(255, 255, 255, 0.1);
     background-color: #437313;
     color: #C0E699;
+`
+
+const Logo = styled.div`
+    position: absolute;
+    top: 15%;
+    left: 0%;
+    width: 150px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     h1{
-        position: absolute;
-        top: 55%;
-        left: 1%;
         font-family: 'Rosarivo';
         font-style: normal;
         font-weight: 400;
@@ -63,9 +73,8 @@ const StyleHeader = styled.div`
         line-height: 24px;
     }
     img{
-        width: 121px;
-        height: 107px;
-        cursor: pointer;
+        width: 56px;
+        height: 51px;
     }
 `
 
@@ -113,7 +122,7 @@ const Promo = styled.div`
     }
     hr{
         position: absolute;
-        width: 99.5vw;
+        width: 100vw;
         border: 0;
         border: 1px solid #000000;
         top:-40%;

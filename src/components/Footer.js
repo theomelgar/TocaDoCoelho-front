@@ -1,12 +1,15 @@
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { ItensContext } from "../context/itens"
 export default function Footer() {
     const {itens,total} = useContext(ItensContext)
+
+    const navigate = useNavigate()
     
     return (
         <StyleFooter>
-            <h1>
+            <h1 onClick={ () => navigate("/carrinho")}>
                 🛒
                 <p>
                     {itens}
@@ -14,7 +17,7 @@ export default function Footer() {
             </h1>
 
             <h2>
-                {total ? "TOTAL:R$"+total : "ADICIONE PRODUTOS"}
+                {total ? "TOTAL:R$"+Number(total).toFixed(2) : "ADICIONE PRODUTOS"}
             </h2>
         </StyleFooter>
     )

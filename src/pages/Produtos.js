@@ -15,46 +15,51 @@ export default function Produtos() {
                 setProduto(res.data)
             })
             .catch(err => alert(err.response.data.message))
-    },[])
+    }, [])
     return (
         <StyleProdutos>
-            <Header/>
+            <Header />
             <Categoria>
                 <h1>
                     Alimentação
                 </h1>
+                <div>
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Alimentação" &&
-                        <Produto key={p.obs} p={p}/>)
+                        <Produto key={p.nome} p={p} />)
                 }
+                </div>
             </Categoria>
             <Categoria>
                 <h1>
                     Acessórios
                 </h1>
+                <div>
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Acessórios" &&
-                        <Produto key={p.descricao} p={p}/>
+                        <Produto key={p.nome} p={p} />
                     )
                 }
+                </div>
             </Categoria>
             <Categoria>
                 <h1>
                     Higiene
                 </h1>
+                <div>
                 {produto &&
                     produto.map((p) =>
                         p.categoria === "Higiene" &&
                         <>
-                        <Produto key={p._id} p={p}/>
-                        <Produto key={p.nome} p={p}/>
+                            <Produto key={p.nome} p={p} />
                         </>
                     )
                 }
+                </div>
             </Categoria>
-            <Footer/>
+            <Footer />
         </StyleProdutos>
     )
 }
@@ -71,16 +76,19 @@ const StyleProdutos = styled.div`
 `
 const Categoria = styled.div`
     position: relative;
-    display: -webkit-box;
-    width: 90%;
     height: 280px;
-    flex-wrap: nowrap;
-    gap: 10px;
-    overflow: scroll;
+    width: 100vw;
+    >div{
+        margin: 0 10px;
+        position: relative;
+        display: -webkit-box;
+        overflow: auto;
+        height: 300px;
+    }
     >h1{
         position: absolute;
         top: 10px;
-        left: 0px;
+        left: 5%;
         font-weight: 700;
         font-size: 25px;
         line-height: 29px;

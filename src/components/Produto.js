@@ -22,6 +22,7 @@ const StyleProduto = styled.div`
         transform: scale(1.1);
     }
     margin-top: 50px;
+    margin-left: 30px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -68,6 +69,7 @@ const StyleProduto = styled.div`
         color: #274D00;
     }
     button{
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         position: absolute;
         bottom: 8%;
         right: 5%;
