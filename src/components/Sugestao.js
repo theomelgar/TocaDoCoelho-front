@@ -9,7 +9,6 @@ export default function Sugestao({ nome }) {
         api.get(`/`)
             .then(res => {
                 setProduto(res.data)
-                console.log(res.data)
             })
             .catch(err => alert(err.response.data.message))
     }, [])

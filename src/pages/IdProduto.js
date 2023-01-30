@@ -45,11 +45,9 @@ export default function IdProduto() {
                 let index = cesta.indexOf(p)
                 vAntes = Number(cesta[index].valor)
                 qAntes = Number(cesta[index].quantidade)
-                setCesta(cesta.splice(index))
+                setCesta(cesta.splice(index, 1))
             }
         })
-
-        console.log("nao repetido")
         if (qAntes > 0) setItens(itens + qtd - qAntes)
         else setItens(itens + qtd)
         if (vAntes > 0) setTotal((Number(total) + Number(produto.valor) * qtd - vAntes).toFixed(2))

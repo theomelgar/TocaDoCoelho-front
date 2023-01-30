@@ -50,9 +50,9 @@ export default function FinalizarCompra() {
                 setEmail("");
                 setCep("");
                 setPagamentoSelecionado("");
-                setCesta("");
-                setTotal("");
-                setItens("");
+                setCesta([]);
+                setTotal(0);
+                setItens(0);
 
                 navigate("/");
             })
@@ -80,7 +80,7 @@ export default function FinalizarCompra() {
                         name="nome"
                         value={nome}
                         minLength="3"
-                        onChange={(e) => setNome(e.target.value)}
+                        onChange={(e) => setNome(e.target.value )}
                         required />
                     <div><span>Email:</span></div>
                     <input
@@ -128,8 +128,7 @@ export default function FinalizarCompra() {
     }
 
     const formFinalizar = montarFormularioFinalizar();
-    var now = new Date()
-    console.log("data = "+now)
+    
     return (
         <>
             <Container>
